@@ -27,7 +27,7 @@ const server = http.createServer(app);
 const message = "My server is running!";
 console.log(message);
 
-let io = socket(server);
+const io = socket(server);
 
 io.on('connection', newConnection);
 
@@ -43,3 +43,7 @@ function newConnection(socket) {
     }
 }
 
+// start the server:
+server.listen(PORT, function() {
+    console.log("\nNode.js listening on port " + PORT);
+});
