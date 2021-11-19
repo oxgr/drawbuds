@@ -1,5 +1,6 @@
-let express = require('express');
-let socket = require('socket.io');
+const express = require('express');
+const socket = require('socket.io');
+const http = require('http');
 
 // this will be true if this server is running on Heroku
 const IS_HEROKU = (process.env._ && process.env._.indexOf("heroku") !== -1);
@@ -18,7 +19,10 @@ app.get("/", function(req, res) {
     res.sendFile(path.join(PUBLIC_PATH, "index.html"))
 });
 
+// create the primary server from this app:
+const server = http.createServer(app);
 
+// let server = app.listen(PORT);
 
 const message = "My server is running!";
 console.log(message);
@@ -39,4 +43,3 @@ function newConnection(socket) {
     }
 }
 
-let server = app.listen(PORT);
