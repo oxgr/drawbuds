@@ -1,0 +1,21 @@
+{
+  "name": "node-p5-workshop",
+  "version": "1.0.0",
+  "description": "workshop example for node and p5",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "workshop",
+    "node",
+    "p5"
+  ],
+  "author": "faadhi fauzi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.3.2"
+  }
+}
