@@ -1,9 +1,10 @@
-let socket;
+
 
 function setup() {
     createCanvas(600, 600);
     background('pink');
-    socket = io.connect('http://10.0.0.48:8000')
+    let addr = location.origin.replace(/^http/, 'ws')
+    let socket = socket = io.connect(addr);
     socket.on('mouse', newDrawing);
 }
 
