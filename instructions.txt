@@ -1,0 +1,106 @@
+Node.js Workshop Steps
+
+Prerequisites:
+-Install Node.js
+	-nodejs.org
+-Install Visual Studio Code
+
+i. Explain server-side programming
+	- what is a host?
+	- what is a server?
+	- what is node.js?
+
+1. Show javascript math in terminal.
+
+2. Get set up:
+	- make a folder/download template folder
+	- open Visual Studio
+	- drag folder to Visual Studio
+	- new file (server.js)
+
+3. "Hello World"
+	- console.log("hello world");
+	- open terminal
+	- js math
+	- show how to clear
+	- show cd (change directory)
+	- drag path from finder
+	- run server.js
+
+- explain node modules (express)
+- explain npm
+
+4. Show npm website
+	- show where to find install command
+
+5. npm init
+
+6. npm install express --save
+	- highlight dependency
+	- show node modules dir
+
+7. Show Express API
+
+8. let express = require('express');
+
+9. let app = express();
+	- show contents w/console.log(app)
+
+10. let server = app.listen(3000);
+	- run server
+	- open localhost:3000
+	- localhost is address (like IP)
+	- 3000 is like a door
+
+11. Make a public folder
+	- fill with index.html, sketch.js
+
+12. app.use(express.static('public');
+	- show website (no more Cannot GET)
+
+13. write some basic p5
+	- createCanvas(300, 300)
+	- background('pink');
+	- circle(mouseX, mouseY, 60);
+
+14. npm install socket.io --save
+	
+15. let socket = require('socket.io');
+	- just like require express
+	- socket is now a function
+
+16. let io = socket(server);
+	- store the result of the socket function
+
+17. io.sockets.on('connection, newConnection);
+	- function newConnection(socket) {}
+
+18. Visit socket.io website
+	- revisit difference between server and client
+	- copy socket.io client cdn url
+	- import cdn URL into html
+
+19. Write code in client for socket
+	- let socket;
+	- socket = io.connect('localhost/ipAddress:portNumber);
+
+20. log connection in newConnection function
+	- console.log('new connection @ ', socket.id); 
+
+21. send messages from client
+	- function mouseDragged()
+	- string to send
+	- object as package
+	- socket.emit('mouse', data);
+
+22. receive messages from server
+	- socket.on('mouse', mouseMessage)
+	- function mouseMessage(data) {}
+
+23. broadcast data back out
+	- socket.broadcasst.emit('mouse', data)
+	- (if global) io.socket.emit('mouse', data);
+
+24. receive mouse data in client
+	- socket.on('mouse', newDrawing);
+	- function newDrawing(data) {}

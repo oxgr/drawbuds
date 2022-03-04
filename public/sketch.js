@@ -1,30 +1,51 @@
+let socket;
+const randomCol = () => Math.floor( Math.random() * Math.pow(16, 6) ).toString(16);
+let thisId = randomCol();
+// const thisDrawer = {
+//   col: thisCol
+// }
+const idList = [thisId];
 
+let stroke = true;
 
 function setup() {
-    createCanvas(600, 600);
-    background('pink');
-    let addr = location.origin.replace(/^http/, 'ws')
-    let socket = socket = io.connect(addr);
+  createCanvas(800, 800);
+  background('white');
+  const spacing = 20;
+  noStroke();
+  fill(200);
+  
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      if(x % spacing == 0 && y % spacing == 0 )
+        circle(x, y, 2);
+    } 
+  }
+  
+    socket = io.connect('https://drawbuds.glitch.me');
     socket.on('mouse', newDrawing);
 }
 
 function newDrawing(data) {
-    // noStroke();
-    fill('purple');
-    circle(data.x, data.y, 60);
+  const brushSize = 10;
+  const col = '#' + data.id;
+  fill(col);
+  circle(data.x, data.y, brushSize);
 }
 
 function mouseDragged() {
-    // console.log(mouseX + ',' + mouseY);
-
     let data = {
-        x: mouseX,
-        y: mouseY
+      x: mouseX,
+      y: mouseY,
+      id: thisId
     }
 
     socket.emit('mouse', data);
-    fill('white');
-    circle(mouseX, mouseY, 60);
+    newDrawing( data );
+}
+
+function keyPressed() {
+  if (keyCode == 32) thisId = randomCol();
 }
 
 function draw() {

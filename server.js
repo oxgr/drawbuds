@@ -1,33 +1,21 @@
-const express = require('express');
-const socket = require('socket.io');
-const http = require('http');
+// const fs = require("fs");
 
-// this will be true if this server is running on Heroku
-const IS_HEROKU = (process.env._ && process.env._.indexOf("heroku") !== -1);
-// what port should this server be accessed on?
-const PORT = process.env.PORT || 3000
-// where static HTML etc. files are found
-const PUBLIC_PATH = path.join(__dirname, "public")
+// var options = {
+//   key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+//   cert: fs.readFileSync('test/fixtures/keys/agent2-cert.cert')
+// };
 
-
-// create an Express app:
+const express = require("express");
 const app = express();
-// serve static files from PUBLIC_PATH:
-app.use(express.static(PUBLIC_PATH)); 
-// default to index.html if no file given:
-app.get("/", function(req, res) {
-    res.sendFile(path.join(PUBLIC_PATH, "index.html"))
-});
-
-// create the primary server from this app:
-const server = http.createServer(app);
-
-// let server = app.listen(PORT);
-
-const message = "My server is running!";
-console.log(message);
-
+const server = require("http").createServer(app);
+const socket = require("socket.io")
 const io = socket(server);
+
+app.use(express.static("public"));
+
+server.listen(process.env.PORT, () => {
+  console.log("server listening on " + process.env.PORT);
+});
 
 io.on('connection', newConnection);
 
@@ -42,8 +30,3 @@ function newConnection(socket) {
         // console.log(data);
     }
 }
-
-// start the server:
-server.listen(PORT, function() {
-    console.log("\nNode.js listening on port " + PORT);
-});
