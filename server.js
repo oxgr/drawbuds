@@ -7,16 +7,17 @@
 
 const express = require("express");
 const app = express();
-const server = require("http").createServer(app);
+// const server = require("http").createServer(app);
 const socket = require("socket.io")
-const io = socket(server);
+
 
 app.use(express.static("public"));
 
-server.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log("server listening on " + process.env.PORT);
 });
 
+const io = socket(server);
 io.on('connection', newConnection);
 
 function newConnection(socket) {
