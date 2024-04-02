@@ -5,17 +5,16 @@
  * @prop {number} y - y-position of mouse
  */
 
-const WS_URL = "https://drawbuds.glitch.me";
+const WS_URL = "http://localhost:3000";
 
 // socket variable is global only because p5 mouse/key handler functions are global.
 let socket;
 
 // id used to identify this client. also global because of p5
 let thisId = randomColor();
+console.log(thisId);
 
-main();
-
-function main() {
+function setup() {
   // set up our drawing space.
   createCanvas(800, 800);
   drawBackground();
@@ -28,30 +27,10 @@ function main() {
   socket.on("mouse", drawCircle);
 }
 
-/**
- * Mouse event handler from p5.
- */
-function mouseDragged() {
-  let data = {
-    id: thisId,
-    x: mouseX,
-    y: mouseY,
-  };
-
-  socket.emit("mouse", data);
-  newDrawing(data);
-}
-
-/**
- * Key event handler from p5.
- */
-function keyPressed() {
-  // Randomises colour when spacebar is pressed.
-  if (keyCode == 32) thisId = randomColor();
-}
+function draw() {}
 
 function randomColor() {
-  Math.floor(Math.random() * Math.pow(16, 6)).toString(16);
+  return Math.floor(Math.random() * Math.pow(16, 6)).toString(16);
 }
 
 function drawBackground() {
@@ -78,5 +57,29 @@ function drawCircle(data) {
 
   fill(color);
   circle(data.x, data.y, SIZE);
+  console.log("drawing circle");
+  console.log(data);
+}
+
+/**
+ * Mouse event handler from p5.
+ */
+function mouseDragged() {
+  let data = {
+    id: thisId,
+    x: mouseX,
+    y: mouseY,
+  };
+
+  socket.emit("mouse", data);
+  drawCircle(data);
+}
+
+/**
+ * Key event handler from p5.
+ */
+function keyPressed() {
+  // Randomises colour when spacebar is pressed.
+  if (keyCode == 32) thisId = randomColor();
 }
 
